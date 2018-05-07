@@ -1,0 +1,18 @@
+---
+- hosts: network 
+  remote_user: vagrant
+
+
+  tasks:
+
+  #Ansible script module will also copy the script to the remote
+  #location before executing it.So, no need to exclusively copy
+  #it to remote.
+  
+  #Copy the desired script to the remote location from the workstation server.
+  - copy: src=/home/vagrant/deploy/target/scripts/stopHadoop.sh dest=/home/vagrant/ mode=0777
+  
+    
+  - name: Execute stopHadoop.sh
+    #become: true
+    shell: /home/vagrant/stopHadoop.sh
