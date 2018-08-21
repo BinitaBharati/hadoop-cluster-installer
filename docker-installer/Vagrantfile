@@ -45,6 +45,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
            net1mc4.vm.hostname = "net1mc4"
            net1mc4.vm.provision :shell, path: "target/scripts/install_vm.sh"
     end
-   
+    
+   #This is the server where ansible will be installed, and this server will be used to install/configure other servers.
+   #workstation	
+          config.vm.define :workstation do |workstation|
+           workstation.vm.provider :virtualbox do |v|
+            v.name = "workstation"
+            v.customize ["modifyvm", :id, "--memory", "1048"]
+            v.gui = true
+      
+          end
+          workstation.vm.network :private_network, ip: "192.168.50.11"
+          workstation.vm.hostname = "workstation"
+          workstation.vm.provision :shell, path: "target/scripts/workStationConfig.sh"
+    end
 
 end
