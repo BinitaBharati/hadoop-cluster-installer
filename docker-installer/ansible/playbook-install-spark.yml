@@ -1,0 +1,22 @@
+---
+- hosts: network 
+  remote_user: vagrant
+
+
+  tasks:
+
+  #Ansible script module will also copy the script to the remote
+  #location before executing it.So, no need to exclusively copy
+  #it to remote.
+  
+  #Copy the desired script to the remote location from the workstation server.
+  #Desired scripts are already copied during installation of hadoop itself.
+  
+  
+  - name: Changing perm of "install_spark_docker.sh", adding "+x"
+    file: dest=/home/vagrant/docker/input/install/install_spark_docker.sh mode=a+x
+    
+    
+  - name: Execute install_spark_docker.sh
+    #become: true
+    shell: /home/vagrant/docker/input/install/install_spark_docker.sh

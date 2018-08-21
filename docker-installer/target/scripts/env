@@ -1,0 +1,5 @@
+clusterInfo=192.168.10.12,net1mc1;192.168.10.14,net1mc3;192.168.10.15,net1mc4
+masterNodeIp=192.168.10.12
+slaveNodes=192.168.10.14,192.168.10.15
+
+

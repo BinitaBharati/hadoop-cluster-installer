@@ -1,0 +1,30 @@
+---
+- hosts: network 
+  remote_user: vagrant
+
+
+  tasks:
+
+  #Create desired remote directory
+  - name: Creates remote directory recursively
+    file: path=/home/vagrant/docker/input/install state=directory
+  
+  #Copy the desired scripts to the remote location from the workstation server.
+  - name: Copy all the scripts
+    copy:
+      src: "{{ item }}"
+      dest: /home/vagrant/docker/input/install/
+    with_fileglob:
+    - /home/vagrant/deploy/target/scripts/*
+  #- copy: src=/home/vagrant/deploy/target/scripts/startHadoop.sh dest=/home/vagrant/ mode=0777
+  
+  #Copy the dockerfile
+  - name: Copy the DockerFile
+    copy: src=/home/vagrant/deploy/docker/Dockerfile dest=/home/vagrant/docker/input/
+    
+  - name: Changing perm of "install_hadoop_docker.sh", adding "+x"
+    file: dest=/home/vagrant/docker/input/install/install_hadoop_docker.sh mode=a+x
+    
+  - name: Execute install_hadoop_docker.sh
+    #become: true
+    shell: /home/vagrant/docker/input/install/install_hadoop_docker.sh
